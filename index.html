@@ -1,100 +1,81 @@
+// index.html
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine GitHub Page</title>
+    <title>Wetter PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
         }
-        
-        header {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 2px solid #333;
-            margin-bottom: 20px;
-        }
-        
-        nav {
-            margin: 20px 0;
-        }
-        
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-        
-        nav a:hover {
-            background-color: #f0f0f0;
-        }
-        
-        main {
-            padding: 20px 0;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            border-top: 2px solid #333;
+        .weather-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
             margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+        }
+        .temperature {
+            font-size: 2.5em;
+            margin: 10px 0;
+        }
+        .location-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1976d2;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Willkommen auf meiner Website</h1>
-    </header>
+    <h1>Wetter App</h1>
+    <input type="text" class="location-input" placeholder="Stadt eingeben" id="locationInput">
+    <button onclick="getWeather()">Wetter abrufen</button>
+    <div id="error" class="error"></div>
+    <div id="weatherInfo" class="weather-card"></div>
 
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">Über mich</a></li>
-            <li><a href="#projects">Projekte</a></li>
-            <li><a href="#contact">Kontakt</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Willkommen auf meiner persönlichen Website. Hier findest du Informationen über mich und meine Projekte.</p>
-        </section>
-
-        <section id="about">
-            <h2>Über mich</h2>
-            <p>Hier kannst du etwas über dich erzählen...</p>
-        </section>
-
-        <section id="projects">
-            <h2>Meine Projekte</h2>
-            <p>Hier kannst du deine Projekte vorstellen...</p>
-        </section>
-
-        <section id="contact">
-            <h2>Kontakt</h2>
-            <p>Hier können deine Kontaktinformationen stehen...</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Dein Name - Alle Rechte vorbehalten</p>
-    </footer>
+    <script src="app.js"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
