@@ -44,3 +44,33 @@ async function getWeather() {
             <div>Windgeschwindigkeit: ${weatherData.current.wind_speed_10m} m/s</div>
         `;
     }
+function getWeatherInfo(code) {
+    const weatherCodes = {
+        0: { icon: '☀️', description: 'Klar' },
+        1: { icon: '🌤️', description: 'Überwiegend klar' },
+        2: { icon: '⛅', description: 'Teilweise bewölkt' },
+        3: { icon: '☁️', description: 'Bewölkt' },
+        45: { icon: '🌫️', description: 'Neblig' },
+        48: { icon: '🌫️', description: 'Nebel mit Reifbildung' },
+        51: { icon: '🌧️', description: 'Leichter Nieselregen' },
+        53: { icon: '🌧️', description: 'Nieselregen' },
+        55: { icon: '🌧️', description: 'Starker Nieselregen' },
+        61: { icon: '🌧️', description: 'Leichter Regen' },
+        63: { icon: '🌧️', description: 'Regen' },
+        65: { icon: '🌧️', description: 'Starker Regen' },
+        71: { icon: '🌨️', description: 'Leichter Schneefall' },
+        73: { icon: '🌨️', description: 'Schneefall' },
+        75: { icon: '🌨️', description: 'Starker Schneefall' },
+        77: { icon: '🌨️', description: 'Schneegriesel' },
+        80: { icon: '🌦️', description: 'Leichte Regenschauer' },
+        81: { icon: '🌦️', description: 'Regenschauer' },
+        82: { icon: '🌦️', description: 'Starke Regenschauer' },
+        95: { icon: '⛈️', description: 'Gewitter' }
+    };
+    return weatherCodes[code] || { icon: '❓', description: 'Unbekannt' };
+        errorDiv.textContent = '';
+    } catch (error) {
+        errorDiv.textContent = error.message;
+        weatherInfo.innerHTML = '';
+    }
+}
