@@ -2,7 +2,7 @@
     "name": "Wetter PWA",
     "short_name": "Wetter",
     "description": "Eine einfache Wetter Progressive Web App",
-    "start_url": "/index.html",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#f0f2f5",
     "theme_color": "#2196f3",
