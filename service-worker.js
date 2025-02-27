@@ -14,7 +14,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Vereinfachte Fetch-Strategie
+// Vereinfachte Fetch-Strategie für service-worker.js
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
