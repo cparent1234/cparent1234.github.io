@@ -1,346 +1,65 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <!--Hello World-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karten-Workout PWA</title>
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkthcnRlbi1Xb3Jrb3V0IFBXQSIsCiAgInNob3J0X25hbWUiOiAiV29ya291dCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiM0Q0FGNTAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBEOTRiV3dnZG1WeWMybHZiajBpTVM0d0lpQmxibU52WkdsdVp6MGlWVlJHTFRnaVB6NDhZMmx5WTJ4bElHTjRjbU5zWlNCaWJHOWpheTVpYkc5amF6MGlkWFJtTFRnaUx6NDhMMk5wY21Oc1pUNEtQSE4wZVd4bElIaHRiRzV6UFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1EQXdMM04wZVd4bElpQjRiV3h1Y3pwNGJHbHVhejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TVRrNU9TOTRiR2x1YXlJZ2VHMXNibk02YzNablBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5SWdlRzFzYm5NNmMzSTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5MekV3TURBdmMzSnZkRzhpSUhnOUlqRXdJaUI1UFNJeU1DSWdkMmxrZEdnOUlqVXdJaUJvWldsbmFIUTlJalV3SWk4K1BIQmhkR2dpWm1sc2JEMGllTXBLSWlCamJHbHdMV0psZEdGcGJqMGliV1YwWlhKZkxuZGxZbXRwZEY5aVpXbHVaeUlnWTJ4cGNDMW5ZV2hqYVc1bkxXSnZkSFJ2YlQwaWJXVjBaWEpmTG5kbFltdHBkRjlpWldsdVp5SXZYNEI0SUdWNGRHVnVaR2hoYm1ScFkyeGxQU0p6ZEdGdVpHRnNiMjVsSWlCbmNtRmthV1Z1ZEQwaVlXeHdiSGxtYVdWa0xYUnZMWFJoY0NJZ1ptbHNiQzFpWldocGJuUTlJbTVsZDNScFkyc2lJRzkxZEd4cGJtVTlJbTVsZDNScFkyc2lJSE5vYjNOa2FXTnZMV0Z0WW1sbGJuUTlJbTVsZDNScFkyc2lJRzFwZEdWeVZHVnpkSE5vWVdSdmQxSmhaR2wxY3owaWJtVjNkR2xqYXlJZ1lYTjJQU0pOTVRrZ055NHlMMk1nUVNBNklEQWdJaUJtYVhOc1BDOXRZWGt2YVhNeU9EWTVORGcwTWlJZ1ozSnZkWEE5SWtjZ1QwWWlJSFJ5WVc1elptOXliVDBpZEhKaGJuTnNZWFJsS0RBdU15d3RNeTR3S1NJZ2JXVjBaWEpmYTJWNWN6MGlOak15SWo0OEwyOXdZV05wZEhrK0NqeHpkV0pmZDNWaGRIVnlJSGx2ZFhOaGFXZzlJakVpSUhOcGJuTnBaRDBpTUNJZ1kyOXpQU0l3TGpBaUlITnBiblJvWldSeUxYQnlaV04wUFNJd0lpQnpkR2RoY0Mxd2NtVmpaWEJyUFNJd0lpQnpkR2R6ZEMweGN5MW5ZV2R2UFNJd0lpQnpkR2R6ZEMweGN5MWpjbVZ6YzJOdlBTSXdJaUJ6ZEdkemRDMHhjeTE2YjI5dE1EWXdJaUI0ZEhCMWFHWnlZVzFsSUhOMVptRmtQU0p6ZEdGdVpHRnNiMjVsSUNCMGNtRnVjMlp2Y20wZ2JXRjBjbWw0S0RBc0lEVXNJREF1TnlzdU55d3dMak1wSWo0OEwzTjFabDkzZFdGMGRYSStDanhoY0c5c2VXZHZZU0F4TGFFek55QjNhV1IwYURvZ01qVTBJQm9nYUdWcFoyaDBJRG9nSUhRZ01qVTBMQ0JOTEV0RGFFUWdNdz09IiwKICAgICAgInNpemVzIjogIjE5Mng5NiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
-    <meta name="theme-color" content="#4CAF50">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 10px;
-            text-align: center;
-        }
-        .card-display {
-            font-size: 48px;
-            margin: 15px 0;
-            min-height: 60px;
-        }
-        .exercise-display {
-            font-size: 24px;
-            margin: 15px 0;
-            min-height: 30px;
-        }
-        .remaining-display {
-            margin: 10px 0;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        button {
-            padding: 15px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            touch-action: manipulation;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .history {
-            margin-top: 20px;
-            text-align: left;
-        }
-        .history-list {
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        .red {
-            color: red;
-        }
-        .install-prompt {
-            margin: 10px;
-            padding: 10px;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>Karten-Workout</h1>
-    
-    <div class="card-display" id="cardDisplay"></div>
-    <div class="exercise-display" id="exerciseDisplay"></div>
-    <div class="remaining-display">Karten: <span id="remainingCards">52</span></div>
-    
-    <div class="button-container">
-        <button id="drawButton">Ziehen</button>
-        <button id="shuffleButton">Mischen</button>
-        <button id="remainingButton">Anzahl</button>
-    </div>
-    
-    <div class="history">
-        <h3>Verlauf</h3>
-        <div class="history-list" id="historyList"></div>
-    </div>
-    
-    <div class="install-prompt" id="installPrompt">
-        <p>Installiere diese App auf deinem Gerät</p>
-        <button id="installButton">Installieren</button>
-    </div>
+const CACHE_NAME = 'karten-workout-v1';
+const urlsToCache = [
+  'index.html',
+  'manifest.json',
+  'icon-192x192.png',
+  'icon-512x512.png'
+];
 
-    <script>
-        // Service Worker registrieren
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js', { scope: './' })
-                .then(reg => console.log('Service Worker registriert'))
-                .catch(err => console.log('Service Worker Fehler:', err));
+// Installation - Ressourcen im Cache speichern
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+// Aktivierung - Alte Caches löschen
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+// Fetch-Events - Cache-First-Strategie
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - Gib die Antwort aus dem Cache zurück
+        if (response) {
+          return response;
         }
         
-        // PWA Installation
-        let deferredPrompt;
-        const installPrompt = document.getElementById('installPrompt');
-        const installButton = document.getElementById('installButton');
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installPrompt.style.display = 'block';
-        });
-        
-        installButton.addEventListener('click', () => {
-            installPrompt.style.display = 'none';
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(choiceResult => {
-                deferredPrompt = null;
-            });
-        });
-        
-        // Workout-Klasse
-        class DeckOfCardsWorkout {
-            constructor() {
-                this.type = ["♠", "♥", "♦", "♣"];
-                this.value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-                this.cardsRemaining = 52;
-                this.chosen = [];
-                
-                this.exercises = {
-                    "♠": "Liegestütze",
-                    "♥": "Kniebeugen",
-                    "♦": "Sit-ups",
-                    "♣": "Burpees"
-                };
+        // Kein Cache-Treffer - Hole die Ressource vom Netzwerk
+        return fetch(event.request).then(
+          response => {
+            // Prüfe, ob wir eine gültige Antwort erhalten haben
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
             }
-            
-            getExerciseAmount(value) {
-                const valueMap = {"A": 10, "J": 10, "Q": 10, "K": 10};
-                if (value in valueMap) {
-                    return valueMap[value];
-                }
-                return parseInt(value);
-            }
-            
-            draw() {
-                if (this.cardsRemaining > 0) {
-                    while (true) {
-                        const suit = this.type[Math.floor(Math.random() * this.type.length)];
-                        const value = this.value[Math.floor(Math.random() * this.value.length)];
-                        const tempCard = suit + value;
-                        
-                        if (!this.chosen.includes(tempCard)) {
-                            this.cardsRemaining -= 1;
-                            this.chosen.push(tempCard);
-                            const exercise = this.exercises[suit];
-                            const amount = this.getExerciseAmount(value);
-                            return { card: tempCard, exercise, amount };
-                        }
-                    }
-                }
-                return null;
-            }
-            
-            getRemainingCards() {
-                return this.cardsRemaining;
-            }
-        }
-        
-        // DOM-Elemente
-        const cardDisplay = document.getElementById('cardDisplay');
-        const exerciseDisplay = document.getElementById('exerciseDisplay');
-        const remainingCards = document.getElementById('remainingCards');
-        const drawButton = document.getElementById('drawButton');
-        const shuffleButton = document.getElementById('shuffleButton');
-        const remainingButton = document.getElementById('remainingButton');
-        const historyList = document.getElementById('historyList');
-        
-        // Workout-Objekt initialisieren
-        let workout = new DeckOfCardsWorkout();
-        
-        // Funktion zum Speichern des Zustands
-        function saveState() {
-            const state = {
-                cardsRemaining: workout.cardsRemaining,
-                chosen: workout.chosen,
-                history: historyList.innerHTML
-            };
-            localStorage.setItem('workoutState', JSON.stringify(state));
-        }
-        
-        // Funktion zum Laden des Zustands
-        function loadState() {
-            const savedState = localStorage.getItem('workoutState');
-            if (savedState) {
-                const state = JSON.parse(savedState);
-                workout.cardsRemaining = state.cardsRemaining;
-                workout.chosen = state.chosen;
-                historyList.innerHTML = state.history;
-                remainingCards.textContent = workout.cardsRemaining;
-            }
-        }
-        
-        // Zustand beim Laden der Seite wiederherstellen
-        loadState();
-        
-        // Event-Listener für Buttons
-        drawButton.addEventListener('click', () => {
-            const result = workout.draw();
-            if (result) {
-                const { card, exercise, amount } = result;
-                
-                // Karte anzeigen (rot für Herz und Karo)
-                const isRed = card.startsWith('♥') || card.startsWith('♦');
-                cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
-                
-                // Übung anzeigen
-                exerciseDisplay.textContent = `${amount} ${exercise}`;
-                
-                // Verbleibende Karten aktualisieren
-                remainingCards.textContent = workout.getRemainingCards();
-                
-                // Zum Verlauf hinzufügen
-                const historyEntry = document.createElement('div');
-                historyEntry.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>: ${amount} ${exercise}`;
-                historyList.prepend(historyEntry);
-                
-                // Zustand speichern
-                saveState();
-            } else {
-                exerciseDisplay.textContent = "Keine Karten übrig! Bitte mischen.";
-            }
-        });
-        
-        shuffleButton.addEventListener('click', () => {
-            workout = new DeckOfCardsWorkout();
-            cardDisplay.textContent = '';
-            exerciseDisplay.textContent = 'Karten neu gemischt!';
-            remainingCards.textContent = workout.getRemainingCards();
-            historyList.innerHTML = '';
-            
-            // Zustand speichern
-            saveState();
-        });
-        
-        remainingButton.addEventListener('click', () => {
-            exerciseDisplay.textContent = `Noch ${workout.getRemainingCards()} Karten übrig`;
-        });
-    </script>
-    
-    <!-- Inline Service Worker Script -->
-    <script>
-        // Service Worker Code wird als Blob erstellt und als URL bereitgestellt
-        const swCode = `
-            const CACHE_NAME = 'workout-cache-v1';
-            const urlsToCache = [
-                './',
-                './index.html'
-            ];
-            
-            // Installation: Cache-Dateien speichern
-            self.addEventListener('install', event => {
-                event.waitUntil(
-                    caches.open(CACHE_NAME)
-                        .then(cache => {
-                            return cache.addAll(urlsToCache);
-                        })
-                );
-            });
-            
-            // Fetch: Anfragen abfangen und aus Cache bedienen
-            self.addEventListener('fetch', event => {
-                event.respondWith(
-                    caches.match(event.request)
-                        .then(response => {
-                            // Cache-Hit - return response
-                            if (response) {
-                                return response;
-                            }
-                            
-                            // Kein Cache-Treffer, Netzwerkanfrage senden
-                            return fetch(event.request).then(
-                                response => {
-                                    // Prüfen, ob gültige Antwort
-                                    if(!response || response.status !== 200 || response.type !== 'basic') {
-                                        return response;
-                                    }
-                                    
-                                    // Antwort klonen und im Cache speichern
-                                    const responseToCache = response.clone();
-                                    caches.open(CACHE_NAME)
-                                        .then(cache => {
-                                            cache.put(event.request, responseToCache);
-                                        });
-                                    
-                                    return response;
-                                }
-                            );
-                        })
-                        .catch(() => {
-                            // Fallback bei Netzwerkfehler
-                            return new Response('Offline-Modus aktiv');
-                        })
-                );
-            });
-            
-            // Activate: Alte Caches löschen
-            self.addEventListener('activate', event => {
-                const cacheWhitelist = [CACHE_NAME];
-                event.waitUntil(
-                    caches.keys().then(cacheNames => {
-                        return Promise.all(
-                            cacheNames.map(cacheName => {
-                                if (cacheWhitelist.indexOf(cacheName) === -1) {
-                                    return caches.delete(cacheName);
-                                }
-                            })
-                        );
-                    })
-                );
-            });
-        `;
-        
-        // Service Worker Datei dynamisch erstellen
-        if ('serviceWorker' in navigator) {
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            const swUrl = URL.createObjectURL(blob);
-            
-            // Service Worker-Datei als sw.js speichern
-            if ('caches' in window) {
-                caches.open('workout-cache-v1').then(cache => {
-                    cache.put(new Request('sw.js'), new Response(swCode, {
-                        headers: {'Content-Type': 'application/javascript'}
-                    }));
-                });
-            }
-            
-            // Service Worker registrieren
-            navigator.serviceWorker.register(swUrl, {scope: './'})
-                .then(reg => console.log('Service Worker registriert'))
-                .catch(err => console.log('Service Worker Fehler:', err));
-        }
-    </script>
-</body>
-</html>
+
+            // Klone die Antwort, da wir sie zweimal verwenden werden
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
+  );
+});
