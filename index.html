@@ -3,297 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moderne PWA</title>
-    
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2196f3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-    
-    <!-- Preload wichtiger Ressourcen -->
-    <link rel="preload" href="app.js" as="script">
-    
+    <title>Deck of Cards Workout</title>
     <style>
-        :root {
-            --primary-color: #2196f3;
-            --secondary-color: #1976d2;
-            --background-color: #f5f5f5;
-            --text-color: #333;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        .header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .nav-link:hover {
-            background-color: var(--secondary-color);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 2rem 0;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px;
             text-align: center;
-            padding: 1.5rem;
         }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+        .card-display {
+            font-size: 36px;
+            margin: 20px 0;
+            min-height: 50px;
         }
-
-        /* Buttons */
-        .button {
-            background: var(--primary-color);
+        .exercise-display {
+            font-size: 24px;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+        .remaining-display {
+            margin: 10px 0;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
+            border-radius: 5px;
         }
-
-        .button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-1px);
+        button:hover {
+            background-color: #45a049;
         }
-
-        /* Offline Banner */
-        .offline-banner {
-            background: #ff9800;
-            color: white;
+        .history {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .history h3 {
             text-align: center;
-            padding: 0.5rem;
-            display: none;
         }
-
-        /* Footer */
-        .footer {
-            background: #333;
-            color: white;
-            padding: 2rem 0;
-            margin-top: auto;
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
         }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-menu {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
+        .red {
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div id="offlineBanner" class="offline-banner">
-        Du bist offline. Einige Funktionen könnten eingeschränkt sein.
+    <h1>Deck of Cards Workout</h1>
+    
+    <div class="card-display" id="cardDisplay"></div>
+    <div class="exercise-display" id="exerciseDisplay"></div>
+    <div class="remaining-display">Verbleibende Karten: <span id="remainingCards">52</span></div>
+    
+    <div class="button-container">
+        <button id="drawButton">Karte ziehen</button>
+        <button id="shuffleButton">Neu mischen</button>
+        <button id="remainingButton">Verbleibende Karten</button>
+    </div>
+    
+    <div class="history">
+        <h3>Trainings-Verlauf</h3>
+        <div class="history-list" id="historyList"></div>
     </div>
 
-    <header class="header">
-        <div class="container header-content">
-            <h1>Moderne PWA</h1>
-            <nav class="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#about" class="nav-link">Über uns</a>
-                <a href="#contact" class="nav-link">Kontakt</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="main-content container">
-        <section id="home" class="card">
-            <h2>Willkommen bei unserer PWA</h2>
-            <p>Eine moderne Progressive Web App mit fortschrittlichen Funktionen und elegantem Design.</p>
-            <button id="installButton" class="button" style="display: none;">
-                App installieren
-            </button>
-        </section>
-
-        <section id="features" class="feature-grid">
-            <div class="card feature-item">
-                <div class="feature-icon">📱</div>
-                <h3>Installierbar</h3>
-                <p>Installiere die App auf deinem Gerät für schnellen Zugriff</p>
-            </div>
-            <div class="card feature-item">
-                <div class="feature-icon">🌐</div>
-                <h3>Offline-Nutzung</h3>
-                <p>Nutze die App auch ohne Internetverbindung</p>
-            </div>
-            <div class="card feature-item">
-                <div class="feature-icon">🚀</div>
-                <h3>Schnell & Reaktionsschnell</h3>
-                <p>Optimierte Performance auf allen Geräten</p>
-            </div>
-        </section>
-
-        <section id="about" class="card">
-            <h2>Über uns</h2>
-            <p>Wir entwickeln moderne Web-Anwendungen mit Fokus auf Benutzerfreundlichkeit und Innovation.</p>
-        </section>
-
-        <section id="contact" class="card">
-            <h2>Kontakt</h2>
-            <p>Haben Sie Fragen? Kontaktieren Sie uns!</p>
-            <form id="contactForm">
-                <div style="margin-bottom: 1rem;">
-                    <label for="email">E-Mail:</label>
-                    <input type="email" id="email" required style="width: 100%; padding: 0.5rem; margin-top: 0.5rem;">
-                </div>
-                <div style="margin-bottom: 1rem;">
-                    <label for="message">Nachricht:</label>
-                    <textarea id="message" required style="width: 100%; padding: 0.5rem; margin-top: 0.5rem; min-height: 100px;"></textarea>
-                </div>
-                <button type="submit" class="button">Senden</button>
-            </form>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container footer-content">
-            <div class="footer-section">
-                <h3>Navigation</h3>
-                <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#about">Über uns</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Rechtliches</h3>
-                <ul class="footer-links">
-                    <li><a href="#datenschutz">Datenschutz</a></li>
-                    <li><a href="#impressum">Impressum</a></li>
-                    <li><a href="#agb">AGB</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Social Media</h3>
-                <ul class="footer-links">
-                    <li><a href="#twitter">Twitter</a></li>
-                    <li><a href="#facebook">Facebook</a></li>
-                    <li><a href="#instagram">Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script src="app.js"></script>
+    <script>
+        class DeckOfCardsWorkout {
+            constructor() {
+                this.type = ["♠", "♥", "♦", "♣"];
+                this.value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+                this.cardsRemaining = 52;
+                this.chosen = [];
+                
+                this.exercises = {
+                    "♠": "Liegestütze",
+                    "♥": "Kniebeugen",
+                    "♦": "Sit-ups",
+                    "♣": "Burpees"
+                };
+            }
+            
+            getExerciseAmount(value) {
+                const valueMap = {"A": 10, "J": 10, "Q": 10, "K": 10};
+                if (value in valueMap) {
+                    return valueMap[value];
+                }
+                return parseInt(value);
+            }
+            
+            draw() {
+                if (this.cardsRemaining > 0) {
+                    while (true) {
+                        const suit = this.type[Math.floor(Math.random() * this.type.length)];
+                        const value = this.value[Math.floor(Math.random() * this.value.length)];
+                        const tempCard = suit + value;
+                        
+                        if (!this.chosen.includes(tempCard)) {
+                            this.cardsRemaining -= 1;
+                            this.chosen.push(tempCard);
+                            const exercise = this.exercises[suit];
+                            const amount = this.getExerciseAmount(value);
+                            return { card: tempCard, exercise, amount };
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            getRemainingCards() {
+                return this.cardsRemaining;
+            }
+        }
+        
+        // DOM-Elemente
+        const cardDisplay = document.getElementById('cardDisplay');
+        const exerciseDisplay = document.getElementById('exerciseDisplay');
+        const remainingCards = document.getElementById('remainingCards');
+        const drawButton = document.getElementById('drawButton');
+        const shuffleButton = document.getElementById('shuffleButton');
+        const remainingButton = document.getElementById('remainingButton');
+        const historyList = document.getElementById('historyList');
+        
+        // Workout-Objekt initialisieren
+        let workout = new DeckOfCardsWorkout();
+        
+        // Event-Listener für Buttons
+        drawButton.addEventListener('click', () => {
+            const result = workout.draw();
+            if (result) {
+                const { card, exercise, amount } = result;
+                
+                // Karte anzeigen (rot für Herz und Karo)
+                const isRed = card.startsWith('♥') || card.startsWith('♦');
+                cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
+                
+                // Übung anzeigen
+                exerciseDisplay.textContent = `${amount} ${exercise}`;
+                
+                // Verbleibende Karten aktualisieren
+                remainingCards.textContent = workout.getRemainingCards();
+                
+                // Zum Verlauf hinzufügen
+                const historyEntry = document.createElement('div');
+                historyEntry.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>: ${amount} ${exercise}`;
+                historyList.prepend(historyEntry);
+            } else {
+                exerciseDisplay.textContent = "Keine Karten übrig! Bitte neu mischen.";
+            }
+        });
+        
+        shuffleButton.addEventListener('click', () => {
+            workout = new DeckOfCardsWorkout();
+            cardDisplay.textContent = '';
+            exerciseDisplay.textContent = 'Karten neu gemischt!';
+            remainingCards.textContent = workout.getRemainingCards();
+            historyList.innerHTML = '';
+        });
+        
+        remainingButton.addEventListener('click', () => {
+            exerciseDisplay.textContent = `Verbleibende Karten: ${workout.getRemainingCards()}`;
+        });
+    </script>
 </body>
 </html>
