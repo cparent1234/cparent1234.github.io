@@ -3,267 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4CAF50">
-    <meta name="description" content="Eine Karten-Workout App für zufällige Übungen">
     <title>Karten-Workout PWA</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="images/icon-192x192.png">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkthcnRlbi1Xb3Jrb3V0IFBXQSIsCiAgInNob3J0X25hbWUiOiAiV29ya291dCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiM0Q0FGNTAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBEOTRiV3dnZG1WeWMybHZiajBpTVM0d0lpQmxibU52WkdsdVp6MGlWVlJHTFRnaVB6NDhZMmx5WTJ4bElHTjRjbU5zWlNCaWJHOWpheTVpYkc5amF6MGlkWFJtTFRnaUx6NDhMMk5wY21Oc1pUNEtQSE4wZVd4bElIaHRiRzV6UFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1EQXdMM04wZVd4bElpQjRiV3h1Y3pwNGJHbHVhejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TVRrNU9TOTRiR2x1YXlJZ2VHMXNibk02YzNablBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5SWdlRzFzYm5NNmMzSTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5MekV3TURBdmMzSnZkRzhpSUhnOUlqRXdJaUI1UFNJeU1DSWdkMmxrZEdnOUlqVXdJaUJvWldsbmFIUTlJalV3SWk4K1BIQmhkR2dpWm1sc2JEMGllTXBLSWlCamJHbHdMV0psZEdGcGJqMGliV1YwWlhKZkxuZGxZbXRwZEY5aVpXbHVaeUlnWTJ4cGNDMW5ZV2hqYVc1bkxXSnZkSFJ2YlQwaWJXVjBaWEpmTG5kbFltdHBkRjlpWldsdVp5SXZYNEI0SUdWNGRHVnVaR2hoYm1ScFkyeGxQU0p6ZEdGdVpHRnNiMjVsSWlCbmNtRmthV1Z1ZEQwaVlXeHdiSGxtYVdWa0xYUnZMWFJoY0NJZ1ptbHNiQzFpWldocGJuUTlJbTVsZDNScFkyc2lJRzkxZEd4cGJtVTlJbTVsZDNScFkyc2lJSE5vYjNOa2FXTnZMV0Z0WW1sbGJuUTlJbTVsZDNScFkyc2lJRzFwZEdWeVZHVnpkSE5vWVdSdmQxSmhaR2wxY3owaWJtVjNkR2xqYXlJZ1lYTjJQU0pOTVRrZ055NHlMMk1nUVNBNklEQWdJaUJtYVhOc1BDOXRZWGt2YVhNeU9EWTVORGcwTWlJZ1ozSnZkWEE5SWtjZ1QwWWlJSFJ5WVc1elptOXliVDBpZEhKaGJuTnNZWFJsS0RBdU15d3RNeTR3S1NJZ2JXVjBaWEpmYTJWNWN6MGlOak15SWo0OEwyOXdZV05wZEhrK0NqeHpkV0pmZDNWaGRIVnlJSGx2ZFhOaGFXZzlJakVpSUhOcGJuTnBaRDBpTUNJZ1kyOXpQU0l3TGpBaUlITnBiblJvWldSeUxYQnlaV04wUFNJd0lpQnpkR2RoY0Mxd2NtVmpaWEJyUFNJd0lpQnpkR2R6ZEMweGN5MW5ZV2R2UFNJd0lpQnpkR2R6ZEMweGN5MWpjbVZ6YzJOdlBTSXdJaUJ6ZEdkemRDMHhjeTE2YjI5dE1EWXdJaUI0ZEhCMWFHWnlZVzFsSUhOMVptRmtQU0p6ZEdGdVpHRnNiMjVsSUNCMGNtRnVjMlp2Y20wZ2JXRjBjbWw0S0RBc0lEVXNJREF1TnlzdU55d3dMak1wSWo0OEwzTjFabDkzZFdGMGRYSStDanhoY0c5c2VXZHZZU0F4TGFFek55QjNhV1IwYURvZ01qVTBJQm9nYUdWcFoyaDBJRG9nSUhRZ01qVTBMQ0JOTEV0RGFFUWdNdz09IiwKICAgICAgInNpemVzIjogIjE5Mng5NiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
+    <meta name="theme-color" content="#4CAF50">
     <style>
-        :root {
-            --primary-color: #4CAF50;
-            --primary-dark: #388E3C;
-            --text-color: #333;
-            --card-red: #e53935;
-            --background: #f5f5f5;
-            --card-background: #fff;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 600px;
+            font-family: Arial, sans-serif;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
-            background-color: var(--background);
-            color: var(--text-color);
-            transition: background-color 0.3s;
         }
-
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 85vh;
-        }
-
-        header {
-            margin-bottom: 20px;
-        }
-
-        .card-container {
-            background-color: var(--card-background);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            flex-grow: 1;
-        }
-
         .card-display {
-            font-size: 72px;
-            margin: 20px 0;
-            min-height: 100px;
-            transition: transform 0.3s ease;
-        }
-        
-        .card-display.animate {
-            transform: scale(1.2);
-        }
-
-        .exercise-display {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 20px 0;
-            min-height: 40px;
-        }
-
-        .stats-display {
-            display: flex;
-            justify-content: space-around;
+            font-size: 48px;
             margin: 15px 0;
-            font-size: 16px;
+            min-height: 60px;
         }
-
+        .exercise-display {
+            font-size: 24px;
+            margin: 15px 0;
+            min-height: 30px;
+        }
+        .remaining-display {
+            margin: 10px 0;
+        }
         .button-container {
             display: flex;
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            margin: 25px 0;
+            margin-top: 20px;
         }
-
         button {
-            padding: 12px 24px;
-            font-size: 16px;
+            padding: 15px 25px;
+            font-size: 18px;
             cursor: pointer;
-            background-color: var(--primary-color);
+            background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 50px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: background-color 0.3s, transform 0.2s;
-            min-width: 120px;
+            border-radius: 5px;
+            touch-action: manipulation;
         }
-
         button:hover {
-            background-color: var(--primary-dark);
+            background-color: #45a049;
         }
-        
-        button:active {
-            transform: scale(0.98);
-        }
-
         .history {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: left;
         }
-
-        .history h3 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
         .history-list {
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
-            border-radius: 10px;
             border: 1px solid #ddd;
             padding: 10px;
-            background-color: var(--card-background);
         }
-
-        .history-item {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
         .red {
-            color: var(--card-red);
+            color: red;
         }
-        
-        .installed-message {
-            display: none;
-            background-color: #f0f8ff;
-            border-left: 4px solid #4CAF50;
+        .install-prompt {
+            margin: 10px;
             padding: 10px;
-            margin: 10px 0;
-            text-align: left;
+            background-color: #f1f1f1;
             border-radius: 5px;
-        }
-        
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --primary-color: #43A047;
-                --primary-dark: #2E7D32;
-                --text-color: #f0f0f0;
-                --card-red: #ef5350;
-                --background: #121212;
-                --card-background: #1e1e1e;
-            }
-            
-            .history-list {
-                border-color: #333;
-            }
-            
-            .history-item {
-                border-bottom-color: #333;
-            }
-            
-            .installed-message {
-                background-color: #1e2a30;
-                border-color: #43A047;
-            }
-        }
-        
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #323232;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 24px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 1000;
-        }
-        
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-10px);
-        }
-        
-        /* Loading spinner */
-        .loader {
-            border: 4px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-color);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
             display: none;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <h1>Karten-Workout</h1>
-        </header>
-        
-        <div id="installBanner" class="installed-message">
-            Diese App kannst du auf deinem Gerät installieren! Suche nach "Zum Startbildschirm hinzufügen" im Browser-Menü.
-            <button id="closeInstallBanner" style="padding: 4px 8px; font-size: 12px; float: right;">Schließen</button>
-        </div>
-        
-        <div class="card-container">
-            <div class="card-display" id="cardDisplay"></div>
-            <div class="exercise-display" id="exerciseDisplay">Ziehe eine Karte, um zu beginnen</div>
-            <div class="loader" id="loader"></div>
-            <div class="stats-display">
-                <div>Verbleibende Karten: <span id="remainingCards">52</span></div>
-                <div>Erledigte Übungen: <span id="completedExercises">0</span></div>
-            </div>
-        </div>
-        
-        <div class="button-container">
-            <button id="drawButton">Karte ziehen</button>
-            <button id="shuffleButton">Neu mischen</button>
-            <button id="remainingButton">Statistik</button>
-        </div>
-        
-        <div class="history">
-            <h3>Trainings-Verlauf</h3>
-            <div class="history-list" id="historyList"></div>
-        </div>
+    <h1>Karten-Workout</h1>
+    
+    <div class="card-display" id="cardDisplay"></div>
+    <div class="exercise-display" id="exerciseDisplay"></div>
+    <div class="remaining-display">Karten: <span id="remainingCards">52</span></div>
+    
+    <div class="button-container">
+        <button id="drawButton">Ziehen</button>
+        <button id="shuffleButton">Mischen</button>
+        <button id="remainingButton">Anzahl</button>
     </div>
     
-    <div class="toast" id="toast"></div>
+    <div class="history">
+        <h3>Verlauf</h3>
+        <div class="history-list" id="historyList"></div>
+    </div>
+    
+    <div class="install-prompt" id="installPrompt">
+        <p>Installiere diese App auf deinem Gerät</p>
+        <button id="installButton">Installieren</button>
+    </div>
 
     <script>
-        // Service Worker Registration
+        // Service Worker registrieren
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js')
-                .then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                })
-                .catch(function(error) {
-                    console.log('ServiceWorker registration failed: ', error);
-                });
-            });
+            navigator.serviceWorker.register('sw.js', { scope: './' })
+                .then(reg => console.log('Service Worker registriert'))
+                .catch(err => console.log('Service Worker Fehler:', err));
         }
         
+        // PWA Installation
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'block';
+        });
+        
+        installButton.addEventListener('click', () => {
+            installPrompt.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(choiceResult => {
+                deferredPrompt = null;
+            });
+        });
+        
+        // Workout-Klasse
         class DeckOfCardsWorkout {
             constructor() {
                 this.type = ["♠", "♥", "♦", "♣"];
                 this.value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
                 this.cardsRemaining = 52;
                 this.chosen = [];
-                this.completedExercises = 0;
                 
                 this.exercises = {
                     "♠": "Liegestütze",
@@ -271,9 +133,6 @@
                     "♦": "Sit-ups",
                     "♣": "Burpees"
                 };
-                
-                // Load saved state if available
-                this.loadState();
             }
             
             getExerciseAmount(value) {
@@ -294,13 +153,8 @@
                         if (!this.chosen.includes(tempCard)) {
                             this.cardsRemaining -= 1;
                             this.chosen.push(tempCard);
-                            this.completedExercises += 1;
                             const exercise = this.exercises[suit];
                             const amount = this.getExerciseAmount(value);
-                            
-                            // Save state
-                            this.saveState();
-                            
                             return { card: tempCard, exercise, amount };
                         }
                     }
@@ -311,234 +165,181 @@
             getRemainingCards() {
                 return this.cardsRemaining;
             }
-            
-            getCompletedExercises() {
-                return this.completedExercises;
-            }
-            
-            getExerciseStats() {
-                // Count exercises by type
-                const stats = {};
-                for (const card of this.chosen) {
-                    const suit = card.charAt(0);
-                    const value = card.slice(1);
-                    const exercise = this.exercises[suit];
-                    const amount = this.getExerciseAmount(value);
-                    
-                    if (!stats[exercise]) {
-                        stats[exercise] = 0;
-                    }
-                    stats[exercise] += amount;
-                }
-                return stats;
-            }
-            
-            saveState() {
-                const state = {
-                    chosen: this.chosen,
-                    cardsRemaining: this.cardsRemaining,
-                    completedExercises: this.completedExercises
-                };
-                localStorage.setItem('cardWorkoutState', JSON.stringify(state));
-            }
-            
-            loadState() {
-                const savedState = localStorage.getItem('cardWorkoutState');
-                if (savedState) {
-                    const state = JSON.parse(savedState);
-                    this.chosen = state.chosen || [];
-                    this.cardsRemaining = state.cardsRemaining || 52;
-                    this.completedExercises = state.completedExercises || 0;
-                }
-            }
-            
-            resetState() {
-                localStorage.removeItem('cardWorkoutState');
-            }
         }
         
         // DOM-Elemente
         const cardDisplay = document.getElementById('cardDisplay');
         const exerciseDisplay = document.getElementById('exerciseDisplay');
         const remainingCards = document.getElementById('remainingCards');
-        const completedExercises = document.getElementById('completedExercises');
         const drawButton = document.getElementById('drawButton');
         const shuffleButton = document.getElementById('shuffleButton');
         const remainingButton = document.getElementById('remainingButton');
         const historyList = document.getElementById('historyList');
-        const loader = document.getElementById('loader');
-        const toast = document.getElementById('toast');
-        const installBanner = document.getElementById('installBanner');
-        const closeInstallBanner = document.getElementById('closeInstallBanner');
         
         // Workout-Objekt initialisieren
         let workout = new DeckOfCardsWorkout();
         
-        // Anzeige aktualisieren
-        function updateDisplay() {
-            remainingCards.textContent = workout.getRemainingCards();
-            completedExercises.textContent = workout.getCompletedExercises();
-            
-            // Verlauf laden
-            loadHistory();
+        // Funktion zum Speichern des Zustands
+        function saveState() {
+            const state = {
+                cardsRemaining: workout.cardsRemaining,
+                chosen: workout.chosen,
+                history: historyList.innerHTML
+            };
+            localStorage.setItem('workoutState', JSON.stringify(state));
         }
         
-        // Toast-Nachricht anzeigen
-        function showToast(message, duration = 3000) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        }
-        
-        // Karten-Animation
-        function animateCard() {
-            cardDisplay.classList.add('animate');
-            setTimeout(() => {
-                cardDisplay.classList.remove('animate');
-            }, 300);
-        }
-        
-        // Verlauf im Local Storage speichern
-        function saveToHistory(entry) {
-            let history = JSON.parse(localStorage.getItem('cardWorkoutHistory') || '[]');
-            history.unshift(entry);
-            
-            // Maximal 100 Einträge speichern
-            if (history.length > 100) {
-                history = history.slice(0, 100);
+        // Funktion zum Laden des Zustands
+        function loadState() {
+            const savedState = localStorage.getItem('workoutState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                workout.cardsRemaining = state.cardsRemaining;
+                workout.chosen = state.chosen;
+                historyList.innerHTML = state.history;
+                remainingCards.textContent = workout.cardsRemaining;
             }
-            
-            localStorage.setItem('cardWorkoutHistory', JSON.stringify(history));
         }
         
-        // Verlauf aus Local Storage laden
-        function loadHistory() {
-            historyList.innerHTML = '';
-            const history = JSON.parse(localStorage.getItem('cardWorkoutHistory') || '[]');
-            
-            if (history.length === 0) {
-                const emptyMessage = document.createElement('div');
-                emptyMessage.textContent = 'Noch keine Übungen absolviert';
-                emptyMessage.style.textAlign = 'center';
-                emptyMessage.style.padding = '10px';
-                historyList.appendChild(emptyMessage);
-                return;
-            }
-            
-            history.forEach(item => {
-                const historyEntry = document.createElement('div');
-                historyEntry.className = 'history-item';
-                historyEntry.innerHTML = `<span class="${item.isRed ? 'red' : ''}">${item.card}</span>: ${item.amount} ${item.exercise}`;
-                historyList.appendChild(historyEntry);
-            });
-        }
-        
-        // Statistik anzeigen
-        function showStats() {
-            const stats = workout.getExerciseStats();
-            let statsMessage = 'Deine Workout-Statistik:\n\n';
-            
-            let totalReps = 0;
-            for (const [exercise, amount] of Object.entries(stats)) {
-                statsMessage += `${exercise}: ${amount} Wiederholungen\n`;
-                totalReps += amount;
-            }
-            
-            statsMessage += `\nGesamte Wiederholungen: ${totalReps}`;
-            
-            alert(statsMessage);
-        }
+        // Zustand beim Laden der Seite wiederherstellen
+        loadState();
         
         // Event-Listener für Buttons
         drawButton.addEventListener('click', () => {
-            // Lade-Animation anzeigen
-            loader.style.display = 'block';
-            exerciseDisplay.textContent = '';
-            
-            // Verzögerung für bessere UX
-            setTimeout(() => {
-                const result = workout.draw();
-                loader.style.display = 'none';
+            const result = workout.draw();
+            if (result) {
+                const { card, exercise, amount } = result;
                 
-                if (result) {
-                    const { card, exercise, amount } = result;
-                    
-                    // Karte anzeigen (rot für Herz und Karo)
-                    const isRed = card.startsWith('♥') || card.startsWith('♦');
-                    cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
-                    
-                    // Animation
-                    animateCard();
-                    
-                    // Übung anzeigen
-                    exerciseDisplay.textContent = `${amount} ${exercise}`;
-                    
-                    // Anzeige aktualisieren
-                    updateDisplay();
-                    
-                    // Zur Historie hinzufügen
-                    saveToHistory({
-                        card: card,
-                        exercise: exercise,
-                        amount: amount,
-                        isRed: isRed,
-                        timestamp: new Date().toISOString()
-                    });
-                    
-                    // Wenn fast keine Karten mehr übrig sind
-                    if (workout.getRemainingCards() <= 5) {
-                        showToast(`Nur noch ${workout.getRemainingCards()} Karten übrig!`);
-                    }
-                } else {
-                    exerciseDisplay.textContent = "Keine Karten übrig!";
-                    showToast("Deck ist leer. Bitte neu mischen!");
-                }
-            }, 600);
+                // Karte anzeigen (rot für Herz und Karo)
+                const isRed = card.startsWith('♥') || card.startsWith('♦');
+                cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
+                
+                // Übung anzeigen
+                exerciseDisplay.textContent = `${amount} ${exercise}`;
+                
+                // Verbleibende Karten aktualisieren
+                remainingCards.textContent = workout.getRemainingCards();
+                
+                // Zum Verlauf hinzufügen
+                const historyEntry = document.createElement('div');
+                historyEntry.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>: ${amount} ${exercise}`;
+                historyList.prepend(historyEntry);
+                
+                // Zustand speichern
+                saveState();
+            } else {
+                exerciseDisplay.textContent = "Keine Karten übrig! Bitte mischen.";
+            }
         });
         
         shuffleButton.addEventListener('click', () => {
-            // Bestätigung für Neu-Mischen
-            if (workout.getCompletedExercises() > 0) {
-                if (!confirm("Möchtest du wirklich neu mischen? Dein aktueller Fortschritt geht verloren.")) {
-                    return;
-                }
-            }
-            
             workout = new DeckOfCardsWorkout();
-            workout.resetState();
-            localStorage.removeItem('cardWorkoutHistory');
-            
             cardDisplay.textContent = '';
             exerciseDisplay.textContent = 'Karten neu gemischt!';
+            remainingCards.textContent = workout.getRemainingCards();
+            historyList.innerHTML = '';
             
-            updateDisplay();
-            showToast("Deck neu gemischt!");
+            // Zustand speichern
+            saveState();
         });
         
         remainingButton.addEventListener('click', () => {
-            showStats();
+            exerciseDisplay.textContent = `Noch ${workout.getRemainingCards()} Karten übrig`;
         });
+    </script>
+    
+    <!-- Inline Service Worker Script -->
+    <script>
+        // Service Worker Code wird als Blob erstellt und als URL bereitgestellt
+        const swCode = `
+            const CACHE_NAME = 'workout-cache-v1';
+            const urlsToCache = [
+                './',
+                './index.html'
+            ];
+            
+            // Installation: Cache-Dateien speichern
+            self.addEventListener('install', event => {
+                event.waitUntil(
+                    caches.open(CACHE_NAME)
+                        .then(cache => {
+                            return cache.addAll(urlsToCache);
+                        })
+                );
+            });
+            
+            // Fetch: Anfragen abfangen und aus Cache bedienen
+            self.addEventListener('fetch', event => {
+                event.respondWith(
+                    caches.match(event.request)
+                        .then(response => {
+                            // Cache-Hit - return response
+                            if (response) {
+                                return response;
+                            }
+                            
+                            // Kein Cache-Treffer, Netzwerkanfrage senden
+                            return fetch(event.request).then(
+                                response => {
+                                    // Prüfen, ob gültige Antwort
+                                    if(!response || response.status !== 200 || response.type !== 'basic') {
+                                        return response;
+                                    }
+                                    
+                                    // Antwort klonen und im Cache speichern
+                                    const responseToCache = response.clone();
+                                    caches.open(CACHE_NAME)
+                                        .then(cache => {
+                                            cache.put(event.request, responseToCache);
+                                        });
+                                    
+                                    return response;
+                                }
+                            );
+                        })
+                        .catch(() => {
+                            // Fallback bei Netzwerkfehler
+                            return new Response('Offline-Modus aktiv');
+                        })
+                );
+            });
+            
+            // Activate: Alte Caches löschen
+            self.addEventListener('activate', event => {
+                const cacheWhitelist = [CACHE_NAME];
+                event.waitUntil(
+                    caches.keys().then(cacheNames => {
+                        return Promise.all(
+                            cacheNames.map(cacheName => {
+                                if (cacheWhitelist.indexOf(cacheName) === -1) {
+                                    return caches.delete(cacheName);
+                                }
+                            })
+                        );
+                    })
+                );
+            });
+        `;
         
-        // Installation Banner
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Verhindern Sie das automatische Anzeigen des Prompts
-            e.preventDefault();
-            // Speichern Sie das Event, damit Sie es später auslösen können
-            deferredPrompt = e;
-            // Banner anzeigen
-            installBanner.style.display = 'block';
-        });
-        
-        closeInstallBanner.addEventListener('click', () => {
-            installBanner.style.display = 'none';
-        });
-        
-        // Initialisierung
-        updateDisplay();
+        // Service Worker Datei dynamisch erstellen
+        if ('serviceWorker' in navigator) {
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(blob);
+            
+            // Service Worker-Datei als sw.js speichern
+            if ('caches' in window) {
+                caches.open('workout-cache-v1').then(cache => {
+                    cache.put(new Request('sw.js'), new Response(swCode, {
+                        headers: {'Content-Type': 'application/javascript'}
+                    }));
+                });
+            }
+            
+            // Service Worker registrieren
+            navigator.serviceWorker.register(swUrl, {scope: './'})
+                .then(reg => console.log('Service Worker registriert'))
+                .catch(err => console.log('Service Worker Fehler:', err));
+        }
     </script>
 </body>
 </html>
