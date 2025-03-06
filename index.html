@@ -29,6 +29,11 @@
             margin: 20px 0;
             min-height: 30px;
         }
+        .timer-display {
+            font-size: 36px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
         .remaining-display {
             margin: 10px 0;
         }
@@ -51,6 +56,10 @@
         button:hover {
             background-color: #45a049;
         }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
         .history {
             margin-top: 30px;
             text-align: left;
@@ -67,6 +76,16 @@
         .red {
             color: red;
         }
+        .joker {
+            color: purple;
+            font-weight: bold;
+        }
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -74,9 +93,18 @@
     
     <div class="card-display" id="cardDisplay"></div>
     <div class="exercise-display" id="exerciseDisplay"></div>
-    <div class="remaining-display">Verbleibende Karten: <span id="remainingCards">52</span></div>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    
+    <div class="timer-controls">
+        <button id="startTimerButton">Start Timer</button>
+        <button id="pauseTimerButton">Pause Timer</button>
+        <button id="resetTimerButton">Reset Timer</button>
+    </div>
+    
+    <div class="remaining-display">Verbleibende Karten: <span id="remainingCards">54</span></div>
     
     <div class="button-container">
+        <button id="previousButton">Vorherige Karte</button>
         <button id="drawButton">Karte ziehen</button>
         <button id="shuffleButton">Neu mischen</button>
         <button id="remainingButton">Verbleibende Karten</button>
@@ -99,20 +127,27 @@
 
         class DeckOfCardsWorkout {
             constructor() {
-                this.type = ["♠", "♥", "♦", "♣"];
+                this.type = ["♠", "♥", "♦", "♣", "JOKER"];
                 this.value = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-                this.cardsRemaining = 52;
+                this.cardsRemaining = 54; // 52 normale Karten + 2 Joker
                 this.chosen = [];
+                this.drawHistory = []; // Speichert die gezogenen Karten für "Vorherige Karte"
                 
                 this.exercises = {
                     "♠": "Liegestütze",
                     "♥": "Kniebeugen",
                     "♦": "Sit-ups",
-                    "♣": "Burpees"
+                    "♣": "Burpees",
+                    "JOKER": "Pause"
                 };
+                
+                // Für Joker-Karten
+                this.jokerCount = 0;
             }
             
             getExerciseAmount(value) {
+                if (value === "JOKER") return 30; // 30 Sekunden Pause für Joker
+                
                 const valueMap = {"A": 10, "J": 10, "Q": 10, "K": 10};
                 if (value in valueMap) {
                     return valueMap[value];
@@ -123,8 +158,19 @@
             draw() {
                 if (this.cardsRemaining > 0) {
                     while (true) {
-                        const suit = this.type[Math.floor(Math.random() * this.type.length)];
-                        const value = this.value[Math.floor(Math.random() * this.value.length)];
+                        // Zufällige Karte wählen
+                        let suit, value;
+                        
+                        // Prüfen, ob einer der zwei Joker gezogen werden soll
+                        if (this.jokerCount < 2 && Math.random() < 0.05) {
+                            suit = "JOKER";
+                            value = "JOKER";
+                            this.jokerCount++;
+                        } else {
+                            suit = this.type[Math.floor(Math.random() * (this.type.length - 1))]; // -1 um JOKER auszuschließen
+                            value = this.value[Math.floor(Math.random() * this.value.length)];
+                        }
+                        
                         const tempCard = suit + value;
                         
                         if (!this.chosen.includes(tempCard)) {
@@ -132,9 +178,20 @@
                             this.chosen.push(tempCard);
                             const exercise = this.exercises[suit];
                             const amount = this.getExerciseAmount(value);
-                            return { card: tempCard, exercise, amount };
+                            
+                            const result = { card: tempCard, exercise, amount, suit, value };
+                            this.drawHistory.push(result);
+                            
+                            return result;
                         }
                     }
+                }
+                return null;
+            }
+            
+            getPrevious() {
+                if (this.drawHistory.length > 1) {
+                    return this.drawHistory[this.drawHistory.length - 2];
                 }
                 return null;
             }
@@ -144,40 +201,129 @@
             }
         }
         
+        // Timer-Klasse
+        class WorkoutTimer {
+            constructor(displayElement) {
+                this.display = displayElement;
+                this.seconds = 0;
+                this.interval = null;
+                this.isRunning = false;
+            }
+            
+            start() {
+                if (!this.isRunning) {
+                    this.isRunning = true;
+                    this.interval = setInterval(() => {
+                        this.seconds++;
+                        this.updateDisplay();
+                    }, 1000);
+                }
+            }
+            
+            pause() {
+                if (this.isRunning) {
+                    clearInterval(this.interval);
+                    this.isRunning = false;
+                }
+            }
+            
+            reset() {
+                this.pause();
+                this.seconds = 0;
+                this.updateDisplay();
+            }
+            
+            updateDisplay() {
+                const minutes = Math.floor(this.seconds / 60);
+                const remainingSeconds = this.seconds % 60;
+                this.display.textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
         // DOM-Elemente
         const cardDisplay = document.getElementById('cardDisplay');
         const exerciseDisplay = document.getElementById('exerciseDisplay');
+        const timerDisplay = document.getElementById('timerDisplay');
         const remainingCards = document.getElementById('remainingCards');
         const drawButton = document.getElementById('drawButton');
+        const previousButton = document.getElementById('previousButton');
         const shuffleButton = document.getElementById('shuffleButton');
         const remainingButton = document.getElementById('remainingButton');
         const historyList = document.getElementById('historyList');
+        const startTimerButton = document.getElementById('startTimerButton');
+        const pauseTimerButton = document.getElementById('pauseTimerButton');
+        const resetTimerButton = document.getElementById('resetTimerButton');
         
-        // Workout-Objekt initialisieren
+        // Workout-Objekt und Timer initialisieren
         let workout = new DeckOfCardsWorkout();
+        let timer = new WorkoutTimer(timerDisplay);
         
-        // Event-Listener für Buttons
-        drawButton.addEventListener('click', () => {
-            const result = workout.draw();
+        // Hilfsfunktion zum Anzeigen einer Karte
+        function displayCard(result) {
             if (result) {
-                const { card, exercise, amount } = result;
+                const { card, exercise, amount, suit } = result;
                 
-                // Karte anzeigen (rot für Herz und Karo)
-                const isRed = card.startsWith('♥') || card.startsWith('♦');
-                cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
+                // Karte anzeigen (rot für Herz und Karo, lila für Joker)
+                if (suit === "JOKER") {
+                    cardDisplay.innerHTML = `<span class="joker">JOKER</span>`;
+                } else {
+                    const isRed = suit === '♥' || suit === '♦';
+                    cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
+                }
                 
                 // Übung anzeigen
-                exerciseDisplay.textContent = `${amount} ${exercise}`;
+                exerciseDisplay.textContent = `${amount} ${suit === "JOKER" ? "Sekunden " : ""}${exercise}`;
                 
                 // Verbleibende Karten aktualisieren
                 remainingCards.textContent = workout.getRemainingCards();
                 
                 // Zum Verlauf hinzufügen
                 const historyEntry = document.createElement('div');
-                historyEntry.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>: ${amount} ${exercise}`;
+                if (suit === "JOKER") {
+                    historyEntry.innerHTML = `<span class="joker">JOKER</span>: ${amount} Sekunden Pause`;
+                } else {
+                    const isRed = suit === '♥' || suit === '♦';
+                    historyEntry.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>: ${amount} ${exercise}`;
+                }
                 historyList.prepend(historyEntry);
+                
+                // Timer zurücksetzen und starten
+                timer.reset();
+                timer.start();
             } else {
                 exerciseDisplay.textContent = "Keine Karten übrig! Bitte neu mischen.";
+            }
+        }
+        
+        // Event-Listener für Buttons
+        drawButton.addEventListener('click', () => {
+            const result = workout.draw();
+            displayCard(result);
+        });
+        
+        previousButton.addEventListener('click', () => {
+            const previousCard = workout.getPrevious();
+            if (previousCard) {
+                // Anzeigen der vorherigen Karte, ohne zum Verlauf hinzuzufügen
+                const { card, exercise, amount, suit } = previousCard;
+                
+                // Karte anzeigen (rot für Herz und Karo, lila für Joker)
+                if (suit === "JOKER") {
+                    cardDisplay.innerHTML = `<span class="joker">JOKER</span>`;
+                } else {
+                    const isRed = suit === '♥' || suit === '♦';
+                    cardDisplay.innerHTML = `<span class="${isRed ? 'red' : ''}">${card}</span>`;
+                }
+                
+                // Übung anzeigen
+                exerciseDisplay.textContent = `${amount} ${suit === "JOKER" ? "Sekunden " : ""}${exercise}`;
+                
+                // Timer zurücksetzen und starten
+                timer.reset();
+                timer.start();
+            } else {
+                exerciseDisplay.textContent = "Keine vorherige Karte verfügbar.";
             }
         });
         
@@ -187,10 +333,24 @@
             exerciseDisplay.textContent = 'Karten neu gemischt!';
             remainingCards.textContent = workout.getRemainingCards();
             historyList.innerHTML = '';
+            timer.reset();
         });
         
         remainingButton.addEventListener('click', () => {
             exerciseDisplay.textContent = `Verbleibende Karten: ${workout.getRemainingCards()}`;
+        });
+        
+        // Timer-Steuerung
+        startTimerButton.addEventListener('click', () => {
+            timer.start();
+        });
+        
+        pauseTimerButton.addEventListener('click', () => {
+            timer.pause();
+        });
+        
+        resetTimerButton.addEventListener('click', () => {
+            timer.reset();
         });
     </script>
 </body>
