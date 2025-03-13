@@ -100,7 +100,7 @@
         }
         .exercise-form {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: auto 2fr 1fr;
             gap: 10px;
             margin-top: 10px;
             text-align: left;
@@ -108,11 +108,21 @@
         .exercise-form label {
             display: flex;
             align-items: center;
+            font-weight: bold;
         }
-        .exercise-form input {
+        .exercise-form input[type="text"] {
             margin-left: 10px;
             padding: 5px;
-            flex-grow: 1;
+            width: 100%;
+        }
+        .exercise-form input[type="number"] {
+            padding: 5px;
+            width: 60px;
+        }
+        .multiplier-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .settings-toggle {
             cursor: pointer;
@@ -141,12 +151,28 @@
     <div class="exercise-settings">
         <h2><span class="settings-toggle" id="settingsToggle">Übungen anpassen ▼</span></h2>
         <div class="exercise-form" id="exerciseForm" style="display: none;">
-            <label>♠ Pik: <input type="text" id="spadeExercise" value="Liegestütze"></label>
-            <label>♥ Herz: <input type="text" id="heartExercise" value="Kniebeugen"></label>
-            <label>♦ Karo: <input type="text" id="diamondExercise" value="Sit-ups"></label>
-            <label>♣ Kreuz: <input type="text" id="clubExercise" value="Burpees"></label>
-            <label>JOKER: <input type="text" id="jokerExercise" value="Pause"></label>
-            <button id="saveExercises">Speichern</button>
+            <label>♠ Pik:</label>
+            <input type="text" id="spadeExercise" value="Liegestütze">
+            <div class="multiplier-label">× <input type="number" id="spadeMultiplier" value="1.0" step="0.1" min="0.1" max="5"></div>
+            
+            <label>♥ Herz:</label>
+            <input type="text" id="heartExercise" value="Kniebeugen">
+            <div class="multiplier-label">× <input type="number" id="heartMultiplier" value="1.0" step="0.1" min="0.1" max="5"></div>
+            
+            <label>♦ Karo:</label>
+            <input type="text" id="diamondExercise" value="Sit-ups">
+            <div class="multiplier-label">× <input type="number" id="diamondMultiplier" value="1.0" step="0.1" min="0.1" max="5"></div>
+            
+            <label>♣ Kreuz:</label>
+            <input type="text" id="clubExercise" value="Burpees">
+            <div class="multiplier-label">× <input type="number" id="clubMultiplier" value="1.0" step="0.1" min="0.1" max="5"></div>
+            
+            <label>JOKER:</label>
+            <input type="text" id="jokerExercise" value="Pause">
+            <div class="multiplier-label">× <input type="number" id="jokerMultiplier" value="1.0" step="0.1" min="0.1" max="5"></div>
+            
+            <div></div>
+            <button id="saveExercises" style="grid-column: span 2;">Speichern</button>
         </div>
     </div>
     
@@ -191,8 +217,18 @@
                     "JOKER": "Pause"
                 };
                 
-                // Laden der gespeicherten Übungen, falls vorhanden
+                // Standard-Multiplikatoren
+                this.multipliers = {
+                    "♠": 1.0,
+                    "♥": 1.0,
+                    "♦": 1.0,
+                    "♣": 1.0,
+                    "JOKER": 1.0
+                };
+                
+                // Laden der gespeicherten Übungen und Multiplikatoren, falls vorhanden
                 this.loadExercises();
+                this.loadMultipliers();
                 
                 // Für Joker-Karten
                 this.jokerCount = 0;
@@ -213,14 +249,40 @@
                 }
             }
             
-            getExerciseAmount(value) {
-                if (value === "JOKER") return 30; // 30 Sekunden Pause für Joker
-                
-                const valueMap = {"A": 10, "J": 10, "Q": 10, "K": 10};
-                if (value in valueMap) {
-                    return valueMap[value];
+            // Speichern der benutzerdefinierten Multiplikatoren
+            saveMultipliers(multipliers) {
+                this.multipliers = multipliers;
+                // Speichern im lokalen Speicher
+                localStorage.setItem('workout-multipliers', JSON.stringify(multipliers));
+            }
+            
+            // Laden der gespeicherten Multiplikatoren
+            loadMultipliers() {
+                const savedMultipliers = localStorage.getItem('workout-multipliers');
+                if (savedMultipliers) {
+                    this.multipliers = JSON.parse(savedMultipliers);
                 }
-                return parseInt(value);
+            }
+            
+            getExerciseAmount(value, suit) {
+                let baseAmount;
+                
+                if (value === "JOKER") {
+                    baseAmount = 30; // 30 Sekunden Pause für Joker
+                } else {
+                    const valueMap = {"A": 10, "J": 10, "Q": 10, "K": 10};
+                    if (value in valueMap) {
+                        baseAmount = valueMap[value];
+                    } else {
+                        baseAmount = parseInt(value);
+                    }
+                }
+                
+                // Multiplikator anwenden
+                const multiplier = this.multipliers[suit] || 1.0;
+                
+                // Auf ganze Zahl runden
+                return Math.round(baseAmount * multiplier);
             }
             
             draw() {
@@ -245,7 +307,7 @@
                             this.cardsRemaining -= 1;
                             this.chosen.push(tempCard);
                             const exercise = this.exercises[suit];
-                            const amount = this.getExerciseAmount(value);
+                            const amount = this.getExerciseAmount(value, suit);
                             
                             const result = { card: tempCard, exercise, amount, suit, value };
                             this.drawHistory.push(result);
@@ -453,7 +515,25 @@
             jokerExercise.value = exercises['JOKER'] || 'Pause';
         }
         
-        // Event-Listener für das Speichern der Übungen
+        // Lade Multiplikatoren-Inputfelder
+        const spadeMultiplier = document.getElementById('spadeMultiplier');
+        const heartMultiplier = document.getElementById('heartMultiplier');
+        const diamondMultiplier = document.getElementById('diamondMultiplier');
+        const clubMultiplier = document.getElementById('clubMultiplier');
+        const jokerMultiplier = document.getElementById('jokerMultiplier');
+        
+        // Lade gespeicherte Multiplikatoren aus localStorage
+        const savedMultipliers = localStorage.getItem('workout-multipliers');
+        if (savedMultipliers) {
+            const multipliers = JSON.parse(savedMultipliers);
+            spadeMultiplier.value = multipliers['♠'] || 1.0;
+            heartMultiplier.value = multipliers['♥'] || 1.0;
+            diamondMultiplier.value = multipliers['♦'] || 1.0;
+            clubMultiplier.value = multipliers['♣'] || 1.0;
+            jokerMultiplier.value = multipliers['JOKER'] || 1.0;
+        }
+        
+        // Event-Listener für das Speichern der Übungen und Multiplikatoren
         document.getElementById('saveExercises').addEventListener('click', () => {
             const newExercises = {
                 '♠': spadeExercise.value || 'Liegestütze',
@@ -463,15 +543,24 @@
                 'JOKER': jokerExercise.value || 'Pause'
             };
             
-            // Speichern der Übungen im Workout-Objekt und localStorage
+            const newMultipliers = {
+                '♠': parseFloat(spadeMultiplier.value) || 1.0,
+                '♥': parseFloat(heartMultiplier.value) || 1.0,
+                '♦': parseFloat(diamondMultiplier.value) || 1.0,
+                '♣': parseFloat(clubMultiplier.value) || 1.0,
+                'JOKER': parseFloat(jokerMultiplier.value) || 1.0
+            };
+            
+            // Speichern der Übungen und Multiplikatoren im Workout-Objekt und localStorage
             workout.saveExercises(newExercises);
+            workout.saveMultipliers(newMultipliers);
             
             // Verstecke das Formular
             exerciseForm.style.display = 'none';
             settingsToggle.textContent = 'Übungen anpassen ▼';
             
             // Bestätigungsmeldung anzeigen
-            exerciseDisplay.textContent = 'Übungen gespeichert!';
+            exerciseDisplay.textContent = 'Einstellungen gespeichert!';
             setTimeout(() => {
                 exerciseDisplay.textContent = '';
             }, 2000);
