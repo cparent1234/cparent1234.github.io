@@ -182,7 +182,6 @@
         <button id="previousButton">Vorherige Karte</button>
         <button id="drawButton">Karte ziehen</button>
         <button id="shuffleButton">Neu mischen</button>
-        <button id="remainingButton">Verbleibende Karten</button>
     </div>
     
     <div class="history">
@@ -464,10 +463,6 @@
             remainingCards.textContent = workout.getRemainingCards();
             historyList.innerHTML = '';
             timer.reset();
-        });
-        
-        remainingButton.addEventListener('click', () => {
-            exerciseDisplay.textContent = `Verbleibende Karten: ${workout.getRemainingCards()}`;
         });
         
         // Timer-Steuerung
