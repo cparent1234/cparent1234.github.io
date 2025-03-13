@@ -60,6 +60,11 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+        #drawButton {
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
         .history {
             margin-top: 30px;
             text-align: left;
@@ -86,6 +91,38 @@
             gap: 10px;
             margin: 10px 0;
         }
+        .exercise-settings {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .exercise-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+            text-align: left;
+        }
+        .exercise-form label {
+            display: flex;
+            align-items: center;
+        }
+        .exercise-form input {
+            margin-left: 10px;
+            padding: 5px;
+            flex-grow: 1;
+        }
+        .settings-toggle {
+            cursor: pointer;
+            color: #4CAF50;
+            text-decoration: underline;
+        }
+        h2 {
+            margin: 0;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +136,18 @@
         <button id="startTimerButton">Start Timer</button>
         <button id="pauseTimerButton">Pause Timer</button>
         <button id="resetTimerButton">Reset Timer</button>
+    </div>
+    
+    <div class="exercise-settings">
+        <h2><span class="settings-toggle" id="settingsToggle">Übungen anpassen ▼</span></h2>
+        <div class="exercise-form" id="exerciseForm" style="display: none;">
+            <label>♠ Pik: <input type="text" id="spadeExercise" value="Liegestütze"></label>
+            <label>♥ Herz: <input type="text" id="heartExercise" value="Kniebeugen"></label>
+            <label>♦ Karo: <input type="text" id="diamondExercise" value="Sit-ups"></label>
+            <label>♣ Kreuz: <input type="text" id="clubExercise" value="Burpees"></label>
+            <label>JOKER: <input type="text" id="jokerExercise" value="Pause"></label>
+            <button id="saveExercises">Speichern</button>
+        </div>
     </div>
     
     <div class="remaining-display">Verbleibende Karten: <span id="remainingCards">54</span></div>
@@ -133,6 +182,7 @@
                 this.chosen = [];
                 this.drawHistory = []; // Speichert die gezogenen Karten für "Vorherige Karte"
                 
+                // Standard-Übungen
                 this.exercises = {
                     "♠": "Liegestütze",
                     "♥": "Kniebeugen",
@@ -141,8 +191,26 @@
                     "JOKER": "Pause"
                 };
                 
+                // Laden der gespeicherten Übungen, falls vorhanden
+                this.loadExercises();
+                
                 // Für Joker-Karten
                 this.jokerCount = 0;
+            }
+            
+            // Speichern der benutzerdefinierten Übungen
+            saveExercises(exercises) {
+                this.exercises = exercises;
+                // Speichern im lokalen Speicher
+                localStorage.setItem('workout-exercises', JSON.stringify(exercises));
+            }
+            
+            // Laden der gespeicherten Übungen
+            loadExercises() {
+                const savedExercises = localStorage.getItem('workout-exercises');
+                if (savedExercises) {
+                    this.exercises = JSON.parse(savedExercises);
+                }
             }
             
             getExerciseAmount(value) {
@@ -351,6 +419,62 @@
         
         resetTimerButton.addEventListener('click', () => {
             timer.reset();
+        });
+        
+        // Übungen anpassen - Toggle-Funktion
+        const settingsToggle = document.getElementById('settingsToggle');
+        const exerciseForm = document.getElementById('exerciseForm');
+        
+        settingsToggle.addEventListener('click', () => {
+            if (exerciseForm.style.display === 'none') {
+                exerciseForm.style.display = 'grid';
+                settingsToggle.textContent = 'Übungen anpassen ▲';
+            } else {
+                exerciseForm.style.display = 'none';
+                settingsToggle.textContent = 'Übungen anpassen ▼';
+            }
+        });
+        
+        // Lade gespeicherte Übungen in die Eingabefelder
+        const spadeExercise = document.getElementById('spadeExercise');
+        const heartExercise = document.getElementById('heartExercise');
+        const diamondExercise = document.getElementById('diamondExercise');
+        const clubExercise = document.getElementById('clubExercise');
+        const jokerExercise = document.getElementById('jokerExercise');
+        
+        // Lade gespeicherte Übungen aus localStorage
+        const savedExercises = localStorage.getItem('workout-exercises');
+        if (savedExercises) {
+            const exercises = JSON.parse(savedExercises);
+            spadeExercise.value = exercises['♠'] || 'Liegestütze';
+            heartExercise.value = exercises['♥'] || 'Kniebeugen';
+            diamondExercise.value = exercises['♦'] || 'Sit-ups';
+            clubExercise.value = exercises['♣'] || 'Burpees';
+            jokerExercise.value = exercises['JOKER'] || 'Pause';
+        }
+        
+        // Event-Listener für das Speichern der Übungen
+        document.getElementById('saveExercises').addEventListener('click', () => {
+            const newExercises = {
+                '♠': spadeExercise.value || 'Liegestütze',
+                '♥': heartExercise.value || 'Kniebeugen',
+                '♦': diamondExercise.value || 'Sit-ups',
+                '♣': clubExercise.value || 'Burpees',
+                'JOKER': jokerExercise.value || 'Pause'
+            };
+            
+            // Speichern der Übungen im Workout-Objekt und localStorage
+            workout.saveExercises(newExercises);
+            
+            // Verstecke das Formular
+            exerciseForm.style.display = 'none';
+            settingsToggle.textContent = 'Übungen anpassen ▼';
+            
+            // Bestätigungsmeldung anzeigen
+            exerciseDisplay.textContent = 'Übungen gespeichert!';
+            setTimeout(() => {
+                exerciseDisplay.textContent = '';
+            }, 2000);
         });
     </script>
 </body>
